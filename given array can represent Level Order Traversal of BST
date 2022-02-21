@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+
+public class BST
+{
+	public class Node
+	{
+		public int min;
+		public int max;
+		public int data;
+		public Node(int d)
+		{
+			data =d;
+			min = int.MinValue;
+			max = int.MaxValue;
+		}
+	}
+	
+	public void isCorrect(int[] arr, int n)
+	{
+		int i=1;
+		Queue<Node> q = new Queue<Node>();
+		Node node = new Node(arr[0]);
+		q.Enqueue(node);
+		while(q.Count > 0)
+		{
+			Node curr = q.Dequeue();
+			if(i <n && arr[i] < curr.data && arr[i] > node.min)
+			{
+				Node n1 = new Node(arr[i]);
+				i++;
+				n1.min = curr.min;
+				n1.max = curr.data;
+				q.Enqueue(n1);
+			}
+			
+			if(i <n && arr[i] > curr.data && arr[i] < node.max)
+			{
+				Node n2 = new Node(arr[i]);
+				i++;
+				n2.min = curr.min;
+				n2.max = curr.data;
+				q.Enqueue(n2);
+			}
+		}
+		
+		if(i == n)
+			Console.Write("It represents level order traveral");
+		else
+			Console.Write("It doesn't represents level order traveral");
+	}
+	
+	public static void Main()
+	{
+		BST g = new BST();
+		int[] arr = {7, 4, 12, 3, 6, 8, 1, 5, 10};
+		int n = arr.Length;
+		g.isCorrect(arr,n);
+	}
+}
