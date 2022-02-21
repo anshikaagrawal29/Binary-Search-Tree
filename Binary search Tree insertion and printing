@@ -1,0 +1,71 @@
+using System;
+using System.Collections.Generic;
+
+public class Tree
+{
+	public Node root;
+	
+	//Create a tree node with left and right as null
+	public class Node
+	{
+		public int data;
+		public Node left;
+		public Node right;
+		public Node(int d)
+		{
+			data = d;
+			left =  right = null;
+		}
+	}
+	
+	public Node insert(int d, Node root)
+	{
+		if(root == null)
+		{
+			root = new Node(d);
+			return root;
+		}
+		
+		if(d <= root.data)
+			root.left = insert(d, root.left);
+		else
+			root.right = insert(d, root.right);
+		
+		return root;
+	}
+	
+	//Printing Tree
+	public void print()
+	{
+				 
+		if(root == null)
+			return;
+
+		Queue<Node> q = new Queue<Node>();
+		q.Enqueue(root);
+		Node curr;
+		while(q.Count > 0)
+		{
+			curr = q.Dequeue();
+			Console.Write(curr.data + " ");
+			
+			if(curr.left != null)
+				q.Enqueue(curr.left);
+			
+			if(curr.right != null)
+				q.Enqueue(curr.right);
+		}
+	}
+	public static void Main()
+	{
+		Tree g = new Tree();
+		g.root = g.insert(20, g.root);
+		g.root =g.insert(8, g.root);
+		g.root =g.insert(22, g.root);
+		g.root =g.insert(4, g.root);
+		g.root =g.insert(12, g.root);
+		g.root =g.insert(10, g.root);
+		g.root =g.insert(14, g.root);
+		g.print();
+	}
+}
