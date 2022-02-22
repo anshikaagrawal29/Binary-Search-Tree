@@ -1,0 +1,70 @@
+using System;
+
+public class LCA
+{
+	public Node root;
+	public class Node
+	{
+		public int data;
+		public Node left ,right;
+		public Node(int d)
+		{
+			data =d;
+			left = right = null;
+		}
+	}
+	
+	public Node insert(int key, Node n)
+	{
+		if(n == null)
+		{
+			n = new Node(key);
+			return n;
+		}
+		
+		if(key <= n.data)
+		{
+			n.left = insert(key, n.left);
+		}
+		else if(key > n.data)
+			n.right = insert(key, n.right);
+		
+		return n;
+	}
+	
+	public Node findLCA(int a1, int b1, Node root)
+	{
+		if(root == null)
+			return null;
+		
+		if(a1 < root.data && b1 < root.data)
+		{
+			return findLCA(a1,b1,root.left);
+		}
+		if(a1 > root.data && b1 > root.data)
+		{
+			return findLCA(a1,b1,root.right);
+		}
+		
+		return root;
+	}
+	
+	public static void Main()
+	{
+		LCA g = new LCA();
+		g.root = g.insert(20, g.root);
+		g.root =g.insert(8, g.root);
+		g.root =g.insert(22, g.root);
+		g.root =g.insert(4, g.root);
+		g.root =g.insert(12, g.root);
+		g.root =g.insert(10, g.root);
+		g.root =g.insert(14, g.root);
+		Node LCA = g.findLCA(10,14, g.root);
+		if(LCA != null)
+			Console.Write(LCA.data);
+		else
+			Console.Write("LCA not found");
+			
+	}
+	
+}
