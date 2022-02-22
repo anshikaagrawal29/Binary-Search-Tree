@@ -1,0 +1,78 @@
+using System;
+using System.Collections.Generic;
+
+public class BST
+{
+	public Node root;
+	public class Node
+	{
+		public int data;
+		public Node left, right;
+		public Node(int d)
+		{
+			data =d;
+			left = right = null;
+		}
+	}
+	
+	//Inserting data and making tree ready
+	public Node insert(int d, Node n)
+	{
+		if(n == null)
+		{
+			n = new Node(d);
+			return n;
+		}
+		
+		 if(d < n.data)
+			 n.left = insert(d, n.left);
+		
+		 if(d > n.data)
+			 n.right = insert(d, n.right);
+		
+		return n;
+	}
+	
+	public bool CheckInternalNode(Node n)
+	{
+		Queue<Node> q = new Queue<Node>();
+		q.Enqueue(n);
+		while(q.Count >0 )
+		{
+			Node curr = q.Dequeue();
+			
+			if(curr.left != null && curr.right != null)
+				return false;
+			
+			if(curr.left == null && curr.right == null && q.Count == 0)
+				return true;
+			
+			if(curr.left != null || curr.right != null)
+			{
+				Node temp = curr.left != null ? curr.left : curr.right;
+				q.Enqueue(temp);
+			}
+		}
+		
+		return false;
+	}
+	public static void Main()
+	{
+		int[] arr = {20, 10, 11, 13, 12};
+		int n = arr.Length;
+		
+		BST g = new BST();
+		
+		for(int i= 0; i <n ; i++)
+		{
+			g.root = g.insert( arr[i], g.root);
+		}
+		
+		bool flag = g.CheckInternalNode(g.root);
+		if(flag)
+			Console.Write("Correct");
+		else
+			Console.Write("Not correct");
+		
+	}
+}
