@@ -1,0 +1,73 @@
+using System;
+using System.Collections.Generic;
+
+public class BST
+{
+	public Node root;
+	public int count=0;
+	public class Node
+	{
+		public int data;
+		public Node left, right;
+		public Node(int d)
+		{
+			data =d;
+			left = right = null;
+		}
+	}
+	
+	//Inserting data and making tree ready
+	public Node insert(int d, Node n)
+	{
+		if(n == null)
+		{
+			n = new Node(d);
+			return n;
+		}
+		
+		 if(d < n.data)
+			 n.left = insert(d, n.left);
+		
+		 if(d > n.data)
+			 n.right = insert(d, n.right);
+		
+		return n;
+	}
+	
+	//Check is sequence exist or not
+	public void CheckSequence(Node n, int[] res)
+	{
+		if(n == null)
+			return;
+		
+		CheckSequence(n.left, res);
+		if(res[count] == n.data)
+		{
+			count ++;
+		}
+		CheckSequence(n.right, res);
+			
+	}
+	
+	public static void Main()
+	{
+		int[] arr = {8,3,10,1,6,14,4,7,13};
+		int[] res = {4, 6, 8, 14};
+		
+		int n = arr.Length;
+		
+		BST g = new BST();
+		
+		for(int i= 0; i <n ; i++)
+		{
+			g.root = g.insert( arr[i], g.root);
+		}
+		
+		g.CheckSequence(g.root, res);
+		
+		if(g.count == res.Length)
+			Console.Write("Yes");
+		else
+			Console.Write("No");
+	}
+}
