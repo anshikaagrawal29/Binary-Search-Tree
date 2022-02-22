@@ -44,6 +44,7 @@ public class BST
 			if(curr.left != null && curr.right != null)
 				return false;
 			
+			//To check if this is the last node which can have both as null
 			if(curr.left == null && curr.right == null && q.Count == 0)
 				return true;
 			
